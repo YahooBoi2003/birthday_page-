@@ -1,1 +1,433 @@
-# birthday_page-
+# birthday_page-<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Beautiful!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nanum Myeongjo', serif;
+            background: linear-gradient(135deg, #f8e8e8 0%, #fff5f5 50%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 40px rgba(210, 180, 180, 0.3);
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(210, 180, 180, 0.3);
+        }
+
+        h1 {
+            color: #d04a4a;
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(210, 180, 180, 0.3);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .musing {
+            background: linear-gradient(135deg, #f9f2e8 0%, #f5e9dc 100%);
+            border-radius: 5px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(210, 180, 180, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #d04a4a;
+            display: none;
+            text-align: left;
+        }
+
+        .musing p {
+            font-size: 1.4em;
+            line-height: 1.8;
+            color: #5a4a42;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signature {
+            font-size: 1.2em;
+            color: #d04a4a;
+            font-weight: bold;
+            margin-top: 30px;
+            text-align: right;
+            font-style: italic;
+        }
+
+        .hearts {
+            font-size: 2em;
+            color: #d04a4a;
+            margin: 30px 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .love-header {
+            margin: 20px 0;
+        }
+
+        .love-header h2 {
+            color: #d04a4a;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-family: 'Nanum Myeongjo', serif;
+            text-shadow: 1px 1px 2px rgba(210, 180, 180, 0.3);
+        }
+
+        .love-header h3 {
+            color: #d04a4a;
+            font-size: 1.8em;
+            font-style: italic;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(210, 180, 180, 0.2);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .celebration-message {
+            font-size: 1.3em;
+            color: #5a4a42;
+            line-height: 1.8;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(248, 232, 232, 0.8);
+            border-radius: 15px;
+            border-left: 4px solid #d04a4a;
+            box-shadow: 0 5px 15px rgba(210, 180, 180, 0.2);
+        }
+
+        /* Scroll Design */
+        .scroll-container {
+            margin: 40px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .scroll {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .scroll:hover {
+            transform: scale(1.05);
+        }
+
+        .scroll-body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f9f2e8 0%, #f5e9dc 100%);
+            border: 2px solid #d04a4a;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(210, 180, 180, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            backface-visibility: hidden;
+        }
+
+        .scroll-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #d04a4a 0%, #a83232 100%);
+            border: 2px solid #d04a4a;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-origin: left center;
+            transition: transform 0.8s ease;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            backface-visibility: hidden;
+        }
+
+        .scroll.opened .scroll-cover {
+            transform: rotateY(-160deg);
+        }
+
+        .scroll-note {
+            color: #ffffff;
+            font-size: 1.5em;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .scroll-content {
+            color: #5a4a42;
+            font-size: 1em;
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .hanji-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23d04a4a" fill-opacity="0.1" d="M50 0 L100 50 L50 100 L0 50 Z"></path></svg>');
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+
+        .korean-border {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid #d04a4a;
+            border-radius: 5px;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .musing p {
+                font-size: 1.2em;
+            }
+            
+            .scroll {
+                width: 250px;
+                height: 180px;
+            }
+        }
+
+        /* Music player styles */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .music-player button {
+            background: #d04a4a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-player span {
+            font-size: 0.9em;
+            color: #5a4a42;
+        }
+
+        /* Hidden YouTube player */
+        .youtube-player {
+            position: fixed;
+            top: -1000px;
+            opacity: 0;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hidden YouTube iframe for background music -->
+    <iframe id="youtubePlayer" class="youtube-player" width="0" height="0" src="https://www.youtube.com/embed/wdxCZivRnqU?enablejsapi=1&autoplay=1&loop=1&playlist=wdxCZivRnqU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+    <div class="container">
+        <h1>Happy Birthday, Beautiful!</h1>
+        
+        <div class="love-header">
+            <h2>From Heart To Heart</h2>
+            <h3>Iroro To Bintu</h3>
+        </div>
+        
+        <div class="hearts">💕 ✨ 💕</div>
+        
+        <div class="scroll-container">
+            <div class="scroll" id="scroll">
+                <div class="scroll-cover">
+                    <div class="hanji-pattern"></div>
+                    <div class="korean-border"></div>
+                    <div class="scroll-note">Please Open</div>
+                </div>
+                <div class="scroll-body">
+                    <div class="hanji-pattern"></div>
+                    <div class="korean-border"></div>
+                    <div class="scroll-content">Happy Birthday My Love</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="musing" id="letter">
+            <p>My dearest love, today I want to remind you that what we have is worth fighting for every single day. Our love isn't just a feeling—it's a choice we make, a commitment we honor, and a dream we build together.</p>
+            
+            <p>I promise you my unwavering loyalty, not just in words but in actions. Through every challenge, every triumph, and every ordinary moment in between, I choose you. I choose us. My heart belongs to you today, tomorrow, and always.</p>
+            
+            <p>Relationships require work, dedication, and the courage to grow together. Let's never stop putting in the effort to understand each other, to lift each other up, and to create the love story we both deserve. Together, we can achieve anything.</p>
+            
+            <p>Happy birthday to the woman who makes me want to be better every day. You inspire me to love deeper, dream bigger, and work harder for our future together.</p>
+            
+            <div class="signature">Forever yours, with all my love ❤️</div>
+        </div>
+        
+        <div class="celebration-message">
+            <strong>Here's to celebrating you today and always!</strong><br>
+            You deserve all the happiness, joy, and wonderful surprises this world has to offer. Thank you for being the amazing person you are and for making my life infinitely brighter just by being in it.
+        </div>
+        
+        <div class="hearts">🎂 🎉 🎈 🎁</div>
+    </div>
+
+    <!-- Music player UI -->
+    <div class="music-player" id="musicPlayer">
+        <button id="playButton">❚❚</button>
+        <span>Peaks and Valleys</span>
+    </div>
+
+    <script>
+        // YouTube API integration
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtubePlayer', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player is ready
+            document.getElementById('playButton').addEventListener('click', function() {
+                if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                    player.pauseVideo();
+                    document.getElementById('playButton').textContent = '▶';
+                } else {
+                    player.playVideo();
+                    document.getElementById('playButton').textContent = '❚❚';
+                }
+            });
+            
+            // Try to autoplay (may be blocked by browser)
+            player.playVideo().catch(error => {
+                console.log('Autoplay prevented:', error);
+            });
+        }
+
+        function onPlayerStateChange(event) {
+            // Handle state changes if needed
+        }
+
+        // Load YouTube API
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll interaction
+            const scroll = document.getElementById('scroll');
+            const letter = document.getElementById('letter');
+            const scrollContent = document.querySelector('.scroll-content');
+            
+            scroll.addEventListener('click', function() {
+                scroll.classList.add('opened');
+                
+                // Show the scroll content
+                setTimeout(() => {
+                    scrollContent.style.display = 'block';
+                    
+                    // Show the full letter after delay
+                    setTimeout(() => {
+                        letter.style.display = 'block';
+                        
+                        // Hide scroll after letter appears
+                        setTimeout(() => {
+                            scroll.style.opacity = '0';
+                            setTimeout(() => {
+                                scroll.style.display = 'none';
+                            }, 300);
+                        }, 500);
+                    }, 1000);
+                }, 800);
+            });
+            
+            // Add floating hearts on click
+            document.querySelector('.container').addEventListener('click', function(e) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '💖';
+                heart.style.position = 'fixed';
+                heart.style.left = e.clientX + 'px';
+                heart.style.top = e.clientY + 'px';
+                heart.style.fontSize = '2em';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '1000';
+                heart.style.transition = 'all 2s ease-out';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.style.transform = 'translateY(-100px)';
+                    heart.style.opacity = '0';
+                }, 100);
+                
+                setTimeout(() => {
+                    document.body.removeChild(heart);
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
