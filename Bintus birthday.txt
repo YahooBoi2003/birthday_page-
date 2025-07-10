@@ -335,6 +335,7 @@
         <button id="playButton">❚❚</button>
         <span>Peaks and Valleys</span>
     </div>
+<p style="font-style: italic; color: #d04a4a;">(Pssst... click the play button for our song!)</p>
 
     <script>
         // YouTube API integration
